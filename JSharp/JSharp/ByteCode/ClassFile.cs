@@ -7,9 +7,10 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using JSharpPackage.Helpers;
+using JSharp.Helpers;
+using JSharp.Package;
 
-namespace JSharpPackage.Class
+namespace JSharp.ByteCode
 {
     public class ConstantsArray<T> : ClassItemBase, IEnumerable<T> where T : class
     {
@@ -36,6 +37,9 @@ namespace JSharpPackage.Class
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public class ClassFile
     {
+        public JavaPackage Parent;
+        public string Name;
+
         public const UInt32 Magic = 0xCAFEBABE;
         public UInt16 MinorVersion;
         public UInt16 MajorVersion;
@@ -63,8 +67,11 @@ namespace JSharpPackage.Class
         public string Version => MajorVersion + "." + MinorVersion;
 
         // ReSharper disable once SuggestBaseTypeForParameter
-        public ClassFile(BigEndianBinaryReader reader)
+        public ClassFile(JavaPackage parent, string name, BigEndianBinaryReader reader)
         {
+            Parent = parent;
+            Name = name;
+
             if(reader.ReadUInt32() != Magic)
                 throw new FormatException();
 
@@ -166,6 +173,13 @@ namespace JSharpPackage.Class
             }
 
             throw new KeyNotFoundException();
+        }
+
+        public override string ToString() {
+            if(Parent == null)
+                return Name;
+
+            return Parent + "." + Name + ".class";
         }
     }
 

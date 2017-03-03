@@ -1,0 +1,10 @@
+﻿using System;
+using System.Reflection;
+using System.Reflection.Emit;
+
+var assembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("custom")
+{
+    ContentType = AssemblyContentType.Default,
+    Flags = AssemblyNameFlags.None,
+    Version = new Version(1, 1, 1)
+}, AssemblyBuilderAccess.RunAndCollect);

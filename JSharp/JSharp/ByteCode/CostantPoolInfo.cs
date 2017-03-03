@@ -1,6 +1,6 @@
-﻿using JSharpPackage.Helpers;
+﻿using JSharp.Helpers;
 
-namespace JSharpPackage.Class {
+namespace JSharp.ByteCode {
     public abstract class ConstantInfoBase : ClassItemBase
     {        
         public ConstantType Tag { get; }

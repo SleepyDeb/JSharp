@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Xml.Linq;
-using JSharpPackage.Helpers;
+using JSharp.Helpers;
 
-namespace JSharpPackage.Class {
+namespace JSharp.ByteCode {
 
     public class AttributeInfo : ClassItemBase {
         public AttributeTarget Target { get; }

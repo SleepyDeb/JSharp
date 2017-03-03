@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace JSharpPackage.Helpers
+namespace JSharp.Helpers
 {
 
     public class BigEndianBinaryReader : BinaryReader
