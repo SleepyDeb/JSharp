@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq.Expressions;
-using System.Xml.Linq;
 using JSharp.Helpers;
 
 namespace JSharp.ByteCode {

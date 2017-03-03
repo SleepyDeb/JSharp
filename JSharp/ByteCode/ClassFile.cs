@@ -1,45 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using JSharp.Helpers;
 using JSharp.Package;
 
-namespace JSharp.ByteCode
-{
-    public class ConstantsArray<T> : ClassItemBase, IEnumerable<T> where T : class
+namespace JSharp.ByteCode {
+    public class ClassFile : JavaPackageElement
     {
-        private ushort[] Indexes { get; }
-        public T this[int i] => ClassFile.Constants[Indexes[i]] as T;
-
-        public ConstantsArray(ClassFile classFile, ushort[] indexes) : base(classFile)
-        {
-            Indexes = indexes;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            foreach (var i in Indexes)
-                yield return ClassFile.Constants[i] as T;
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack = 1)]
-    public class ClassFile
-    {
-        public JavaPackage Parent;
-        public string Name;
-
         public const UInt32 Magic = 0xCAFEBABE;
         public UInt16 MinorVersion;
         public UInt16 MajorVersion;
@@ -65,13 +31,9 @@ namespace JSharp.ByteCode
         public AttributeInfo[] Attributes;
 
         public string Version => MajorVersion + "." + MinorVersion;
-
-        // ReSharper disable once SuggestBaseTypeForParameter
-        public ClassFile(JavaPackage parent, string name, BigEndianBinaryReader reader)
+        
+        public ClassFile(string name, JavaPackage parent, BigEndianBinaryReader reader) : base(parent, name, JavaPackageElementTypes.Class)
         {
-            Parent = parent;
-            Name = name;
-
             if(reader.ReadUInt32() != Magic)
                 throw new FormatException();
 
@@ -173,13 +135,6 @@ namespace JSharp.ByteCode
             }
 
             throw new KeyNotFoundException();
-        }
-
-        public override string ToString() {
-            if(Parent == null)
-                return Name;
-
-            return Parent + "." + Name + ".class";
         }
     }
 

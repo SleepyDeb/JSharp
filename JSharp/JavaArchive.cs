@@ -3,37 +3,49 @@ using System;
 using System.Diagnostics;
 using JSharp.Helpers;
 using JSharp.ByteCode;
+using JSharp.Package;
 
-namespace JSharp.Package {
+namespace JSharp {
     public class JavaArchive : JavaPackage
     {
-        public JavaArchive(string jarName, Stream jarStream) : base(jarName)
+        public JavaArchive(string jarName, Stream jarStream) : base(Path.GetFileNameWithoutExtension(jarName))
         {
             using (var jstream = new System.IO.Compression.ZipArchive(jarStream))
             {
                 foreach (var entry in jstream.Entries)
                 {
 
-                    string fname = entry.FullName;
-                    string entryExtension = Path.GetExtension(fname);
+                    string name = Path.GetFileNameWithoutExtension(entry.FullName);
 
-                    Debug.WriteLine("Entry: {0}", fname);
+                    Debug.WriteLine("Entry: {0}", entry.FullName);
+                    
+                    var pPackage = EnsurePackage(GetPath(entry.FullName)); // Parent Package
+                    
+                    var entryType = JavaPackageElementEx.GetTypeFromString(entry.FullName);
 
-                    if(fname[fname.Length - 1] == '/')
-                        continue;
+                    switch(entryType) {
+                        case JavaPackageElementTypes.Class:
+                            using(var classStream = entry.Open()) {
+                                var reader = new BigEndianBinaryReader(classStream);
+                                var jclass = new ClassFile(name, pPackage, reader);
+                                pPackage.Classes.Add(jclass);
+                            }
+                            break;
 
-                    var ParentPackage = EnsurePackage(GetPath(fname));
-                    if(entryExtension == ".class") {
-                        using(var classStream = entry.Open()) {
-                            var reader = new BigEndianBinaryReader(classStream);
-                            var jclass = new ClassFile(ParentPackage, entry.Name, reader);
-                            ParentPackage.Classes.Add(jclass);
-                        }
-                    } else {
-                        // Manifest and resources
-                        using(var resStream = entry.Open()) {
-                            ParentPackage.Resources.Add(new JavaPackageResource(entry.Name, entryExtension, resStream));
-                        }
+                        case JavaPackageElementTypes.Other:
+                            using(var resStream = entry.Open()) {
+                                pPackage.Resources.Add(new JavaPackageResource(name, pPackage, resStream, Path.GetExtension(entry.FullName)));
+                            }
+                            break;
+
+                        case JavaPackageElementTypes.Manifest:
+                            using(var resStream = entry.Open()) {
+                                pPackage.Resources.Add(new JavaPackageResource(name, pPackage, resStream, ".MD"));
+                            }
+                            break;
+
+                        case JavaPackageElementTypes.Package:
+                            continue;
                     }
                 }
             }

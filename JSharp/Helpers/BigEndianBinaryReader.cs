@@ -10,8 +10,6 @@ namespace JSharp.Helpers
 
     public class BigEndianBinaryReader : BinaryReader
     {
-        
-
         public BigEndianBinaryReader(Stream input) : base(input, Encoding.UTF8)
         {
             
@@ -21,13 +19,6 @@ namespace JSharp.Helpers
         {
             return base.Read(buffer, index, count);
         }
-
-        //public override byte[] ReadBytes(int count)
-        //{
-        //    var arr = base.ReadBytes(count);
-        //    Array.Reverse(arr);
-        //    return arr;
-        //}
 
         public override decimal ReadDecimal()
         {

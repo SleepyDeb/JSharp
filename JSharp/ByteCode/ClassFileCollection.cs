@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using JSharp.ByteCode;
 
-namespace JSharp
-{
+namespace JSharp.ByteCode {
     public class ClassFileCollection : ICollection<ClassFile> {
         List<ClassFile> classFiles;
 

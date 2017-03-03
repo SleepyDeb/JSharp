@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace JSharp
+namespace JSharp.Package
 {
-    public class JavaResourceCollection : ICollection<JavaPackageResource> {
-        List<JavaPackageResource> resources;
+    public class JavaPackageElementCollection : ICollection<JavaPackageElement> {
+        List<JavaPackageElement> resources;
 
-        public JavaResourceCollection() {
-            resources = new List<JavaPackageResource>();
+        public JavaPackageElementCollection() {
+            resources = new List<JavaPackageElement>();
         }
 
         public int Count => resources.Count;
 
         public bool IsReadOnly => false;
 
-        public void Add(JavaPackageResource item) {
+        public void Add(JavaPackageElement item) {
             resources.Add(item);
         }
 
@@ -24,19 +24,19 @@ namespace JSharp
             resources.Clear();
         }
 
-        public bool Contains(JavaPackageResource item) {
+        public bool Contains(JavaPackageElement item) {
             return resources.Contains(item);
         }
 
-        public void CopyTo(JavaPackageResource[] array, int arrayIndex) {
+        public void CopyTo(JavaPackageElement[] array, int arrayIndex) {
             resources.CopyTo(array, arrayIndex);
         }
 
-        public IEnumerator<JavaPackageResource> GetEnumerator() {
+        public IEnumerator<JavaPackageElement> GetEnumerator() {
             return resources.GetEnumerator();
         }
 
-        public bool Remove(JavaPackageResource item) {
+        public bool Remove(JavaPackageElement item) {
             return resources.Remove(item);
         }
 

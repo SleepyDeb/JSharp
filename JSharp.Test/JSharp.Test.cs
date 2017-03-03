@@ -30,13 +30,26 @@ namespace JSharp.Test {
                     sw.Restart();
                     var ja = new JavaArchive(Path.GetFileName(file), js);
                     sw.Stop();
-
-                    int count = 0;
-                    foreach(var c in ja.EnumerateClasses()) {
-                        os.WriteLine("Depacked: {0}", c);
-                        count++;
+                    
+                    int pCount = 0;
+                    foreach(var r in ja.EnumeratePackages()) {
+                        os.WriteLine("Depacked Paks: {0}", r);
+                        pCount++;
                     }
-                    os.WriteLine("Depacked succefully in: {0}ms, {1} Classes ", sw.ElapsedMilliseconds, count);
+
+                    int cCount = 0;
+                    foreach(var c in ja.EnumerateClasses()) {
+                        os.WriteLine("Depacked Class: {0}", c);
+                        cCount++;
+                    }
+
+                    int rCount = 0;
+                    foreach(var r in ja.EnumerateResources()) {
+                        os.WriteLine("Depacked Res: {0}", r);
+                        rCount++;
+                    }
+
+                    os.WriteLine("Depacked succefully in: {0}ms, {1} Classes, {2} Resource, {3} Packages ", sw.ElapsedMilliseconds, cCount, rCount, pCount);
                 }
             }
         }
