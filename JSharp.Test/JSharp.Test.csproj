@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\JSharp\JSharp\JSharp.csproj" />
+    <ProjectReference Include="..\JSharp\JSharp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
