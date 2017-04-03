@@ -22,6 +22,7 @@ namespace JSharp.Test {
         [Fact]
         public async void JSharpCtor()
         {
+            throw new Exception("App Veyor Test");
             using(var cli = new HttpClient()) {
                 foreach(var urlstr in urls) {
                     var url = new Uri(urlstr);
