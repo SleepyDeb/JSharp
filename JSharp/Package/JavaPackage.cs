@@ -25,12 +25,12 @@ namespace JSharp.Package
         }
 
         static IEnumerable<ClassFile> EnumerateClasses(JavaPackage package) {
-            foreach(var f in package.Packages)
+            foreach (var c in package.Classes)
+                yield return c;
+
+            foreach (var f in package.Packages)
                 foreach(var c in EnumerateClasses(f))
                     yield return c;
-
-            foreach(var c in package.Classes)
-                yield return c;
         }
 
         public IEnumerable<JavaPackageResource> EnumerateResources() {
@@ -38,12 +38,12 @@ namespace JSharp.Package
         }
 
         static IEnumerable<JavaPackageResource> EnumerateResources(JavaPackage package) {
-            foreach(var f in package.Packages)
+            foreach (var r in package.Resources)
+                yield return r;
+
+            foreach (var f in package.Packages)
                 foreach(var r in EnumerateResources(f))
                     yield return r;
-
-            foreach(var r in package.Resources)
-                yield return r;
         }
 
         public IEnumerable<JavaPackage> EnumeratePackages() {
