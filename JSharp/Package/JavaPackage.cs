@@ -38,6 +38,7 @@ namespace JSharp.Package
         }
 
         static IEnumerable<JavaPackageResource> EnumerateResources(JavaPackage package) {
+            var lol = new (int, int);
             foreach (var r in package.Resources)
                 yield return r;
 

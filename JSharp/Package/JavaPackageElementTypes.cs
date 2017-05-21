@@ -5,11 +5,29 @@ using System.Linq;
 
 namespace JSharp.Package
 {
+    /// <summary>
+    /// Describe all Package Common Files Type
+    /// </summary>
     public enum JavaPackageElementTypes
     {
+        /// <summary>
+        /// .Class files
+        /// </summary>
         Class,
+
+        /// <summary>
+        /// .MD files
+        /// </summary>
         Manifest,
+
+        /// <summary>
+        /// A directory that contains .class or resource
+        /// </summary>
         Package,
+
+        /// <summary>
+        /// All other files types
+        /// </summary>
         Other
     }
 
@@ -21,7 +39,7 @@ namespace JSharp.Package
             { string.Empty, JavaPackageElementTypes.Other }
         };
 
-        public static Dictionary<string, JavaPackageElementTypes> TypesByEx { get => _typesByEx; set => _typesByEx = value; }
+        public static Dictionary<string, JavaPackageElementTypes> TypesByEx => _typesByEx;
 
         public static string GetExtension(this JavaPackageElementTypes type) {
             return _typesByEx.FirstOrDefault(t => t.Value == type).Key ?? string.Empty;

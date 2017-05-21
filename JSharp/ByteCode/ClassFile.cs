@@ -4,6 +4,12 @@ using JSharp.Helpers;
 using JSharp.Package;
 
 namespace JSharp.ByteCode {
+    /// <summary>
+    /// This class is a parser for JAVA 8 .class compliant to: 
+    ///     https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html
+    ///     
+    /// This class doesn't ensure package consistency.
+    /// </summary>
     public class ClassFile : JavaPackageElement
     {
         public const UInt32 Magic = 0xCAFEBABE;
@@ -31,7 +37,13 @@ namespace JSharp.ByteCode {
         public AttributeInfo[] Attributes;
 
         public string Version => MajorVersion + "." + MinorVersion;
-        
+
+        /// <summary>
+        /// Parse .class files using BigEndianBinaryReader.
+        /// </summary>
+        /// <param name="name">Class name</param>
+        /// <param name="parent">The package that contains this class</param>
+        /// <param name="reader">The reader to get binary data</param>
         public ClassFile(string name, JavaPackage parent, BigEndianBinaryReader reader) : base(parent, name, JavaPackageElementTypes.Class)
         {
             if(reader.ReadUInt32() != Magic)
@@ -138,27 +150,21 @@ namespace JSharp.ByteCode {
         }
     }
 
+    /// <summary>
+    /// All item that lives in a class file inehrit this class
+    /// </summary>
     public abstract class ClassItemBase {
+
+        /// <summary>
+        /// Parent class of the Item
+        /// </summary>
         protected ClassFile ClassFile { get; }
         
         protected ClassItemBase(ClassFile classFile) {
             ClassFile = classFile;
-            if(ClassFile == null) {
-                throw new ArgumentNullException(nameof(classFile));
-            }
-        }
-    }
 
-    [Flags]
-    public enum ClassAccessFlags : ushort
-    {
-        Public = 0x0001, // Declared public; may be accessed from outside its package. 
-        Final = 0x0010, // Declared final; no subclasses allowed. 
-        Super = 0x0020, // Treat superclass methods specially when invoked by the invokespecial instruction. 
-        Interface = 0x0200, // Is an interface, not a class.
-        Abstract = 0x0400, // Declared abstract; must not be instantiated. 
-        Synthetic = 0x1000, // Declared synthetic; not present in the source code. 
-        Annotation = 0x2000, // Declared as an annotation type.
-        Enum = 0x4000 // Declared as an enum type. 
+            if(ClassFile == null)
+                throw new ArgumentNullException(nameof(classFile));
+        }
     }
 }

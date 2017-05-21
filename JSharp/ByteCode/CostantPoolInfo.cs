@@ -189,34 +189,4 @@ namespace JSharp.ByteCode {
             return Value;
         }
     }
-
-    public enum ConstantType : byte
-    {
-        Utf8 = 1,
-        Class = 7,
-        Fieldref = 9,
-        Methodref = 10,
-        InterfaceMethodref = 11,
-        String = 8,
-        Integer = 3,
-        Float = 4,
-        Long = 5,
-        Double = 6,
-        NameAndType = 12,
-        MethodHandle = 15,
-        MethodType = 16,
-        InvokeDynamic = 18
-    }
-
-    public enum MethodReferenceType : byte {
-        GetField = 1, // C.f:T
-        GetStatic = 2, // C.f:T
-        PutField = 3, // C.f:T
-        PutStatic = 4, // C.f:T
-        InvokeVirtual = 5, // C.m:(A*)T
-        InvokeStatic = 6, // C.m:(A*)T
-        InvokeSpecial = 7, // C.m:(A*)T
-        NewInvokeSpecial = 8, // C.<init>:(A*)void
-        InvokeInterface = 9  // C.m:(A*)T
-    }
 }

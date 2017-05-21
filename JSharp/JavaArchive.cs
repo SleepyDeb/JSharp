@@ -6,8 +6,16 @@ using JSharp.ByteCode;
 using JSharp.Package;
 
 namespace JSharp {
+    /// <summary>
+    /// JavaArchive is a parser for JarFiles
+    /// </summary>
     public class JavaArchive : JavaPackage
     {
+        /// <summary>
+        /// Initialize JavaArchive parsing a JarStream
+        /// </summary>
+        /// <param name="jarName">The name of the package</param>
+        /// <param name="jarStream">The stream of the package</param>
         public JavaArchive(string jarName, Stream jarStream) : base(Path.GetFileNameWithoutExtension(jarName))
         {
             using (var jstream = new System.IO.Compression.ZipArchive(jarStream))
@@ -59,7 +67,7 @@ namespace JSharp {
 
             return fullPath.Substring(0, li);
         }
-
+        
         JavaPackage EnsurePackage(string path) {
             JavaPackage cp = this;
 
