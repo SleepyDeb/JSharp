@@ -9,8 +9,12 @@ using System;
 namespace JSharp.Test {
     public class PackageTest
     {
+        /// <summary>
+        /// TestAllPackages Test Cases
+        /// </summary>
         readonly string[] urls = new string[]{
-            "https://search.maven.org/remotecontent?filepath=net/sf/jt400/jt400/9.2/jt400-9.2.jar"
+            "http://central.maven.org/maven2/net/sf/jt400/jt400/9.3/jt400-9.3.jar",
+            "http://central.maven.org/maven2/junit/junit/4.12/junit-4.12.jar"
         };
 
         readonly ITestOutputHelper os;
@@ -20,7 +24,7 @@ namespace JSharp.Test {
         }
 
         [Fact]
-        public async void AllTest() {
+        public async void TestAllPackages() {
             using(var hClient = new HttpClient()) {
                 foreach(var urlstr in urls) {
                     var packagetUrl = new Uri(urlstr);

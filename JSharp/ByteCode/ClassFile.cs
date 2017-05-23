@@ -13,13 +13,17 @@ namespace JSharp.ByteCode {
     public class ClassFile : JavaPackageElement
     {
         public const UInt32 Magic = 0xCAFEBABE;
+
         public UInt16 MinorVersion;
         public UInt16 MajorVersion;
+
         public UInt16 ConstantPoolCount;
         public ConstantInfoBase[] Constants;
         public ClassAccessFlags ClassAccessFlag;
+
         public ushort ThisClassIndex;
         public ConstantClassInfo ThisClass => (ConstantClassInfo) Constants[ThisClassIndex];
+
         public ushort SuperClassIndex;
         public ConstantClassInfo SuperClass => Constants[ThisClassIndex] as ConstantClassInfo;
 
@@ -63,45 +67,59 @@ namespace JSharp.ByteCode {
                     case ConstantType.Class:
                         Constants[i] = new ConstantClassInfo(this, reader);
                         break;
+
                     case ConstantType.Fieldref:
                         Constants[i] = new ConstantFieldrefInfo(this, reader);
                         break;
+
                     case ConstantType.Methodref:
                         Constants[i] = new ConstantMethodrefInfo(this, reader);
                         break;
+
                     case ConstantType.InterfaceMethodref:
                         Constants[i] = new ConstantInterfaceMethodrefInfo(this, reader);
                         break;
+
                     case ConstantType.String:
                         Constants[i] = new ConstantStringInfo(this, reader);
                         break;
+
                     case ConstantType.Integer:
                         Constants[i] = new ConstantIntegerInfo(this, reader);
                         break;
+
                     case ConstantType.Float:
                         Constants[i] = new ConstantFloatInfo(this, reader);
                         break;
+
                     case ConstantType.Long:
                         Constants[i++] = new ConstantLongInfo(this, reader);
                         break;
+
                     case ConstantType.Double:
                         Constants[i++] = new ConstantDoubleInfo(this, reader);
                         break;
+
                     case ConstantType.NameAndType:
                         Constants[i] = new ConstantNameAndTypeInfo(this, reader);
                         break;
+
                     case ConstantType.MethodHandle:
                         Constants[i] = new ConstantMethodHandleInfo(this, reader);
                         break;
+
                     case ConstantType.MethodType:
                         Constants[i] = new ConstantMethodType(this, reader);
                         break;
+
                     case ConstantType.InvokeDynamic:
                         Constants[i] = new ConstantInvokeDynamicInfo(this, reader);
                         break;
+
                     case ConstantType.Utf8:
                         Constants[i] = new ConstantUtf8Info(this, reader);
                         break;
+
                     default:
                         throw new InvalidOperationException("Unknown Constant Pool Type");
                 }

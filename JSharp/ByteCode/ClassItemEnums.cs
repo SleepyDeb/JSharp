@@ -214,16 +214,77 @@ namespace JSharp.ByteCode
         CodeAttribute = 8
     }
 
+    /// <summary>
+    /// This values are described here:
+    ///     https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-5.html#jvms-5.4.3.5-220
+    /// </summary>
     public enum MethodReferenceType : byte
     {
-        GetField = 1, // C.f:T
-        GetStatic = 2, // C.f:T
-        PutField = 3, // C.f:T
-        PutStatic = 4, // C.f:T
-        InvokeVirtual = 5, // C.m:(A*)T
-        InvokeStatic = 6, // C.m:(A*)T
-        InvokeSpecial = 7, // C.m:(A*)T
-        NewInvokeSpecial = 8, // C.<init>:(A*)void
-        InvokeInterface = 9  // C.m:(A*)T
+        /// <summary>
+        /// Interpretation C.f:T
+        /// </summary>
+        GetField = 1,
+
+        /// <summary>
+        /// Interpretation
+        /// </summary>
+        GetStatic = 2,
+
+        /// <summary>
+        /// Interpretation C.f:T
+        /// </summary>
+        PutField = 3,
+
+        /// <summary>
+        /// Interpretation C.f:T
+        /// </summary>
+        PutStatic = 4,
+
+        /// <summary>
+        /// Interpretation C.m:(A*)T
+        /// </summary>
+        InvokeVirtual = 5,
+
+        /// <summary>
+        /// Interpretation C.m:(A*)T
+        /// </summary>
+        InvokeStatic = 6,
+
+        /// <summary>
+        /// Interpretation C.m:(A*)T
+        /// </summary>
+        InvokeSpecial = 7,
+
+        /// <summary>
+        /// Interpretation C.<init>:(A*)void
+        /// </summary>
+        NewInvokeSpecial = 8,
+
+        /// <summary>
+        /// Interpretation C.m:(A*)T
+        /// </summary>
+        InvokeInterface = 9
+    }
+
+    /// <summary>
+    /// Types for ConstantFMIInfo, described here:
+    ///     https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html#jvms-4.4.2
+    /// </summary>
+    public enum ConstantReferenceType
+    {
+        /// <summary>
+        /// Mean that ConstantFMIInfo instance is ConstantFieldrefInfo
+        /// </summary>
+        FieldReference,
+
+        /// <summary>
+        /// Mean that ConstantFMIInfo instance is ConstantMethodrefInfo
+        /// </summary>
+        MethodReference,
+
+        /// <summary>
+        /// Mean that ConstantFMIInfo instance is ConstantInterfaceMethodrefInfo
+        /// </summary>
+        InterfaceMethodReference
     }
 }
